@@ -113,19 +113,24 @@ input[type=text]{width:100%;padding:12px;font-size:16px;margin-top:10px;box-sizi
 </main>
 
 <script>
+<script>
 // --- CONFIGURAÇÃO GOOGLE FORMS ---
-// URL de envio atualizada com o seu ID
+// URL de envio com o ID do seu formulário
 const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSc5hWc2UH-U3jASCdUcsnuomC6IH9UtouMZDAPrcPLEmpX7RA/formResponse";
+
+// IDs entry extraídos dos seus prints
 const ID_ENTRY_NOME = "entry.656967251"; 
 const ID_ENTRY_PRESENTE = "entry.6373781";
 
 const escolhidos = JSON.parse(localStorage.getItem("presentesEscolhidos")) || [];
 const inputNome = document.getElementById("nome");
 
+// Carregar itens já marcados localmente
 document.querySelectorAll(".item").forEach(i => {
  if(escolhidos.includes(i.dataset.item)){
   i.classList.add("escolhido");
-  i.querySelector("input").disabled = true;
+  const radio = i.querySelector("input");
+  if(radio) radio.disabled = true;
  }
 });
 
@@ -143,6 +148,7 @@ function enviar(){
    return; 
  }
 
+ // Desativar botão para evitar múltiplos cliques
  const btn = document.getElementById("btnConfirmar");
  btn.disabled = true;
  btn.innerText = "Confirmando...";
@@ -151,13 +157,16 @@ function enviar(){
  formData.append(ID_ENTRY_NOME, nomeValue);
  formData.append(ID_ENTRY_PRESENTE, itemMarcado.value);
 
+ // Enviar para o Google Forms em segundo plano
  fetch(GOOGLE_FORM_URL, {
   method: "POST",
   mode: "no-cors",
   body: formData
  }).then(() => {
+  // Salva no navegador do usuário para riscar o item
   escolhidos.push(itemMarcado.value);
   localStorage.setItem("presentesEscolhidos", JSON.stringify(escolhidos));
+  
   alert("Presente confirmado com sucesso! 💛");
   location.reload();
  }).catch(err => {
@@ -167,6 +176,3 @@ function enviar(){
  });
 }
 </script>
-
-</body>
-</html>

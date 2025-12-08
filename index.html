@@ -1,138 +1,27 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chá de Cozinha</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff7f0;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    #popup {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #popup-box {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      width: 300px;
-      text-align: center;
-    }
-    #main {
-      display: none;
-      text-align: center;
-      padding: 20px;
-    }
-    .item {
-      margin: 8px auto;
-      padding: 10px;
-      width: 80%;
-      background: white;
-      border-radius: 8px;
-      cursor: pointer;
-      border: 1px solid #ccc;
-    }
-    .item.selected {
-      background: #ffe4b5;
-      border-color: #ff9900;
-    }
-  </style>
-</head>
-<body>
-
-<div style="text-align:center; margin-bottom:20px;">
-  <img id="fotoConvite" src="https://via.placeholder.com/300x180?text=Sua+Foto+Aqui" alt="Foto do Chá" style="width:300px;border-radius:12px;">
-</div>
-
-<div id="popup">
-  <div id="popup-box">
-    <h3>Digite seu nome</h3>
-    <input type="text" id="nomeInput" placeholder="Seu nome" style="width:100%;padding:8px;border-radius:6px;border:1px solid #aaa;"/>
-    <br><br>
-    <button onclick="entrar()" style="padding:10px 20px;border:none;background:#ff9900;color:white;border-radius:8px;cursor:pointer;">Entrar</button>
-  </div>
-</div>
-
-<div id="main">
-  <h2>Chá de Cozinha 🎀</h2>
-  <p id="saudacao"></p>
-
-  <h3>Escolha o presente que você vai levar:</h3>
-
-  <div id="lista">
-    <div class="item" onclick="selecionar(this)">Lixeira de cozinha (média/grande)</div>
-    <div class="item" onclick="selecionar(this)">Jogo de potes herméticos</div>
-    <div class="item" onclick="selecionar(this)">Batedeira</div>
-    <div class="item" onclick="selecionar(this)">Air Fryer</div>
-    <div class="item" onclick="selecionar(this)">Jogo de prato</div>
-    <div class="item" onclick="selecionar(this)">Jogo de talheres (metal)</div>
-    <div class="item" onclick="selecionar(this)">Potes organizadores (arroz, feijão, açúcar e sal)</div>
-    <div class="item" onclick="selecionar(this)">Sanduicheira preta 127v</div>
-    <div class="item" onclick="selecionar(this)">Frigideira antiaderente</div>
-    <div class="item" onclick="selecionar(this)">Xícaras ou canecas</div>
-    <div class="item" onclick="selecionar(this)">Garrafa térmica</div>
-    <div class="item" onclick="selecionar(this)">Cafeteira</div>
-    <div class="item" onclick="selecionar(this)">Assadeiras (retangular e redonda)</div>
-    <div class="item" onclick="selecionar(this)">Tábuas de corte</div>
-    <div class="item" onclick="selecionar(this)">Conchas e espátulas (kit)</div>
-    <div class="item" onclick="selecionar(this)">Potes de vidro com tampa</div>
-    <div class="item" onclick="selecionar(this)">Potes plásticos com vedação</div>
-    <div class="item" onclick="selecionar(this)">Liquidificador ou mixer</div>
-    <div class="item" onclick="selecionar(this)">Micro-ondas (prata ou preto)</div>
-    <div class="item" onclick="selecionar(this)">Jogo de facas</div>
-    <div class="item" onclick="selecionar(this)">Balde</div>
-    <div class="item" onclick="selecionar(this)">Vassoura e rodo</div>
-    <div class="item" onclick="selecionar(this)">Pá de lixo com cabo</div>
-    <div class="item" onclick="selecionar(this)">Lixeira para lavanderia</div>
-    <div class="item" onclick="selecionar(this)">Cesto de roupas sujas (preto)</div>
-    <div class="item" onclick="selecionar(this)">Ferro de passar</div>
-    <div class="item" onclick="selecionar(this)">Tábua de passar</div>
-    <div class="item" onclick="selecionar(this)">Lixeira de banheiro</div>
-    <div class="item" onclick="selecionar(this)">Toalhas de banho (jogo casal)</div>
-  </div>
-
-  <br>
-  <button onclick="confirmar()" style="padding:12px 20px;border:none;background:#28a745;color:white;border-radius:8px;cursor:pointer;">Confirmar Presença</button>
-
-  <p id="resultado" style="margin-top:20px;font-weight:bold;color:#228B22;"></p>
-</div>
-
 <script>
-  let nome = "";
-  let itemSelecionado = "";
+function enviar() {
+  const nome = document.getElementById("nome").value;
+  const presente = document.querySelector('input[name="presente"]:checked')?.value;
 
-  function entrar() {
-    const input = document.getElementById("nomeInput").value.trim();
-    if (input === "") return alert("Digite seu nome!");
-
-    nome = input;
-    document.getElementById("popup").style.display = "none";
-    document.getElementById("main").style.display = "block";
-    document.getElementById("saudacao").innerText = `Olá, ${nome}! Escolha seu presente:`;
+  if (!nome || !presente) {
+    alert("Preencha seu nome e escolha um presente");
+    return;
   }
 
-  function selecionar(el) {
-    const itens = document.querySelectorAll('.item');
-    itens.forEach(i => i.classList.remove('selected'));
-    el.classList.add('selected');
-    itemSelecionado = el.innerText;
-  }
+  const formURL =
+    "https://docs.google.com/forms/d/e/1FAIpQLSfXmg-GPeH6m0hUxyFwUjTDId7XFSAfmjEwChbsGuilBJ914w/formResponse";
 
-  function confirmar() {
-    if (!itemSelecionado) return alert("Selecione um presente!");
-    document.getElementById("resultado").innerText = `${nome} escolheu: ${itemSelecionado}`;
-  }
+  const data = new FormData();
+  data.append("entry.0", nome);
+  data.append("entry.1", presente);
+
+  fetch(formURL, {
+    method: "POST",
+    body: data,
+    mode: "no-cors"
+  });
+
+  alert("Presença confirmada com sucesso! 💛");
+}
 </script>
 
-</body>
-</html>

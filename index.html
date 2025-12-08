@@ -7,30 +7,27 @@
     <style>
         :root { --principal:#e8c07d; --fundo:#faf7f2; --card:#ffffff; --texto:#3b2f1c; }
         body { margin:0; font-family: sans-serif; background:var(--fundo); color:var(--texto); }
-        header { background:var(--principal); text-align:center; padding:20px; }
-        main { max-width:600px; margin:auto; padding:15px; padding-bottom: 120px; }
+        header { background:var(--principal); text-align:center; padding:20px; cursor: pointer; }
+        main { max-width:600px; margin:auto; padding:15px; padding-bottom: 150px; }
         h2 { border-bottom:2px solid var(--principal); padding-bottom:5px; margin-top: 25px; font-size: 1.2rem; }
         .item { background:var(--card); margin-top:8px; padding:12px; border-radius:8px; display:flex; gap:10px; align-items:center; border: 1px solid #ddd; }
         .item.escolhido { background:#eee; opacity:.5; text-decoration:line-through; }
         button { width:100%; padding:15px; font-size:18px; background:var(--principal); border:none; border-radius:10px; cursor:pointer; font-weight: bold; }
-        
         #popup { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; z-index:9999; }
         #popupContent { background:#fff; padding:25px; border-radius:15px; width:80%; max-width:320px; text-align:center; }
         input[type=text] { width:100%; padding:15px; font-size:16px; margin: 15px 0; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; }
-        
-        #btnConfirmar { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 500px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
+        #btnConfirmar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 500px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); z-index: 100; }
     </style>
 </head>
 <body>
 
-<header>
+<header id="cabecalho">
     <h1>💛 Chá de Cozinha 💛</h1>
 </header>
 
 <div id="popup">
     <div id="popupContent">
         <h3>Seja bem-vindo(a)!</h3>
-        <p>Preencha para ver a lista:</p>
         <input type="text" id="campoNome" placeholder="Digite seu nome completo" autocomplete="off">
         <button id="btnContinuarPopup">Entrar na Lista</button>
     </div>
@@ -100,7 +97,7 @@
     <div class="item" data-item="Extensão / filtro de linha"><input type="radio" name="p" value="Extensão / filtro de linha"> Extensão / filtro de linha</div>
     <div class="item" data-item="Cabides"><input type="radio" name="p" value="Cabides"> Cabides</div>
 
-    <button id="btnConfirmar">Confirmar Presença ✅</button>
+    <button id="btnConfirmar">Confirmar Presente ✅</button>
 </main>
 
 <script>
@@ -109,11 +106,13 @@
     const ID_PRESENTE = "entry.6373781";
 
     const popup = document.getElementById("popup");
+    const header = document.getElementById("cabecalho");
     const inputNome = document.getElementById("campoNome");
     const btnCont = document.getElementById("btnContinuarPopup");
     const btnConf = document.getElementById("btnConfirmar");
 
     const salvos = JSON.parse(localStorage.getItem("presentesEscolhidos")) || [];
+    
     document.querySelectorAll(".item").forEach(el => {
         if(salvos.includes(el.dataset.item)) {
             el.classList.add("escolhido");
@@ -129,11 +128,22 @@
         }, { passive: false });
     };
 
-    setupAction(btnCont, function() {
-        if(inputNome.value.trim().length < 2) {
-            alert("Por favor, digite seu nome completo!");
-            return;
+    // TRUQUE DO RESET: Contador de cliques no cabeçalho
+    let cliquesReset = 0;
+    header.addEventListener("pointerdown", function() {
+        cliquesReset++;
+        if(cliquesReset === 5) {
+            if(confirm("Admin: Deseja resetar sua lista local?")) {
+                localStorage.removeItem("presentesEscolhidos");
+                location.reload();
+            }
+            cliquesReset = 0;
         }
+        setTimeout(() => { cliquesReset = 0; }, 3000); // Reseta o contador após 3 segundos
+    });
+
+    setupAction(btnCont, function() {
+        if(inputNome.value.trim().length < 2) { alert("Digite seu nome!"); return; }
         popup.style.display = "none";
         window.scrollTo(0,0);
     });
@@ -153,7 +163,7 @@
         fetch(FORM_URL, { method: "POST", mode: "no-cors", body: fd }).then(() => {
             salvos.push(sel.value);
             localStorage.setItem("presentesEscolhidos", JSON.stringify(salvos));
-            alert("Confirmado! Obrigado, " + nome + " 💛");
+            alert("Confirmado com sucesso! 💛");
             location.reload();
         }).catch(() => {
             alert("Erro de conexão.");

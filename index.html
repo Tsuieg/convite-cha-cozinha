@@ -13,9 +13,11 @@
         .item { background:var(--card); margin-top:8px; padding:12px; border-radius:8px; display:flex; gap:10px; align-items:center; border: 1px solid #ddd; }
         .item.escolhido { background:#eee; opacity:.5; text-decoration:line-through; }
         button { width:100%; padding:15px; font-size:18px; background:var(--principal); border:none; border-radius:10px; cursor:pointer; font-weight: bold; }
+        
         #popup { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; z-index:9999; }
         #popupContent { background:#fff; padding:25px; border-radius:15px; width:80%; max-width:320px; text-align:center; }
         input[type=text] { width:100%; padding:15px; font-size:16px; margin: 15px 0; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; }
+        
         #btnConfirmar { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 500px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
     </style>
 </head>
@@ -28,16 +30,17 @@
 <div id="popup">
     <div id="popupContent">
         <h3>Seja bem-vindo(a)!</h3>
-        <input type="text" id="campoNome" placeholder="Digite seu nome" autocomplete="off">
-        <button id="btnContinuarPopup">Continuar</button>
+        <p>Preencha para ver a lista:</p>
+        <input type="text" id="campoNome" placeholder="Digite seu nome completo" autocomplete="off">
+        <button id="btnContinuarPopup">Entrar na Lista</button>
     </div>
 </div>
 
 <main>
     <h2>🍳 COZINHA</h2>
-    <div class="item" data-item="Lixeira de cozinha"><input type="radio" name="p" value="Lixeira de cozinha"> Lixeira de cozinha</div>
+    <div class="item" data-item="Lixeira de cozinha (média ou grande)"><input type="radio" name="p" value="Lixeira de cozinha (média ou grande)"> Lixeira de cozinha (média ou grande)</div>
     <div class="item" data-item="Jogo de potes herméticos"><input type="radio" name="p" value="Jogo de potes herméticos"> Jogo de potes herméticos</div>
-    <div class="item" data-item="Potes organizadores"><input type="radio" name="p" value="Potes organizadores"> Potes organizadores</div>
+    <div class="item" data-item="Potes organizadores (arroz, feijão, açúcar e sal)"><input type="radio" name="p" value="Potes organizadores (arroz, feijão, açúcar e sal)"> Potes organizadores (arroz, feijão, açúcar e sal)</div>
     <div class="item" data-item="Potes de vidro com tampa"><input type="radio" name="p" value="Potes de vidro com tampa"> Potes de vidro com tampa</div>
     <div class="item" data-item="Potes plásticos com vedação"><input type="radio" name="p" value="Potes plásticos com vedação"> Potes plásticos com vedação</div>
     <div class="item" data-item="Jogo de pratos"><input type="radio" name="p" value="Jogo de pratos"> Jogo de pratos</div>
@@ -45,10 +48,10 @@
     <div class="item" data-item="Jogo de facas"><input type="radio" name="p" value="Jogo de facas"> Jogo de facas</div>
     <div class="item" data-item="Frigideira antiaderente"><input type="radio" name="p" value="Frigideira antiaderente"> Frigideira antiaderente</div>
     <div class="item" data-item="Conjunto de panelas"><input type="radio" name="p" value="Conjunto de panelas"> Conjunto de panelas</div>
-    <div class="item" data-item="Assadeiras"><input type="radio" name="p" value="Assadeiras"> Assadeiras</div>
+    <div class="item" data-item="Assadeiras (retangular e redonda)"><input type="radio" name="p" value="Assadeiras (retangular e redonda)"> Assadeiras (retangular e redonda)</div>
     <div class="item" data-item="Tigelas / bowls"><input type="radio" name="p" value="Tigelas / bowls"> Tigelas / bowls</div>
     <div class="item" data-item="Tábuas de corte"><input type="radio" name="p" value="Tábuas de corte"> Tábuas de corte</div>
-    <div class="item" data-item="Kit conchas e espátulas"><input type="radio" name="p" value="Kit conchas e espátulas"> Kit conchas e espátulas</div>
+    <div class="item" data-item="Conchas e espátulas (kit)"><input type="radio" name="p" value="Conchas e espátulas (kit)"> Conchas e espátulas (kit)</div>
     <div class="item" data-item="Escorredor de louça"><input type="radio" name="p" value="Escorredor de louça"> Escorredor de louça</div>
     <div class="item" data-item="Panos de prato"><input type="radio" name="p" value="Panos de prato"> Panos de prato</div>
     <div class="item" data-item="Ralador"><input type="radio" name="p" value="Ralador"> Ralador</div>
@@ -65,24 +68,37 @@
     <div class="item" data-item="Micro-ondas"><input type="radio" name="p" value="Micro-ondas"> Micro-ondas</div>
     <div class="item" data-item="Garrafa térmica"><input type="radio" name="p" value="Garrafa térmica"> Garrafa térmica</div>
 
-    <h2>🧺 LIMPEZA E LAVANDERIA</h2>
+    <h2>🍽️ MESA & CAFÉ</h2>
+    <div class="item" data-item="Xícaras ou canecas"><input type="radio" name="p" value="Xícaras ou canecas"> Xícaras ou canecas</div>
+    <div class="item" data-item="Copos (água e suco)"><input type="radio" name="p" value="Copos (água e suco)"> Copos (água e suco)</div>
+    <div class="item" data-item="Taças (vinho ou bebidas)"><input type="radio" name="p" value="Taças (vinho ou bebidas)"> Taças (vinho ou bebidas)</div>
+    <div class="item" data-item="Jarra de suco"><input type="radio" name="p" value="Jarra de suco"> Jarra de suco</div>
+    <div class="item" data-item="Travessas para servir"><input type="radio" name="p" value="Travessas para servir"> Travessas para servir</div>
+    <div class="item" data-item="Açucareiro"><input type="radio" name="p" value="Açucareiro"> Açucareiro</div>
+    <div class="item" data-item="Porta-guardanapos"><input type="radio" name="p" value="Porta-guardanapos"> Porta-guardanapos</div>
+
+    <h2>🧺 LAVANDERIA E LIMPEZA</h2>
     <div class="item" data-item="Cesto de roupas sujas"><input type="radio" name="p" value="Cesto de roupas sujas"> Cesto de roupas sujas</div>
-    <div class="item" data-item="Lixeira lavanderia"><input type="radio" name="p" value="Lixeira lavanderia"> Lixeira lavanderia</div>
+    <div class="item" data-item="Lixeira para lavanderia"><input type="radio" name="p" value="Lixeira para lavanderia"> Lixeira para lavanderia</div>
     <div class="item" data-item="Balde, Vassoura e Rodo"><input type="radio" name="p" value="Balde, Vassoura e Rodo"> Balde, Vassoura e Rodo</div>
     <div class="item" data-item="Varal e Prendedores"><input type="radio" name="p" value="Varal e Prendedores"> Varal e Prendedores</div>
-    <div class="item" data-item="Ferro de passar"><input type="radio" name="p" value="Ferro de passar"> Ferro de passar</div>
+    <div class="item" data-item="Ferro de passar a vapor"><input type="radio" name="p" value="Ferro de passar a vapor"> Ferro de passar a vapor</div>
     <div class="item" data-item="Tábua de passar"><input type="radio" name="p" value="Tábua de passar"> Tábua de passar</div>
 
     <h2>🚿 BANHEIRO</h2>
     <div class="item" data-item="Lixeira de banheiro"><input type="radio" name="p" value="Lixeira de banheiro"> Lixeira de banheiro</div>
     <div class="item" data-item="Jogo de toalhas banho"><input type="radio" name="p" value="Jogo de toalhas banho"> Jogo de toalhas banho</div>
     <div class="item" data-item="Tapete de banheiro"><input type="radio" name="p" value="Tapete de banheiro"> Tapete de banheiro</div>
+    <div class="item" data-item="Porta-sabonete e escova"><input type="radio" name="p" value="Porta-sabonete e escova"> Porta-sabonete e escova</div>
 
-    <h2>🛠️ FERRAMENTAS E EXTRAS</h2>
+    <h2>🛠️ FERRAMENTAS</h2>
     <div class="item" data-item="Caixa de ferramentas"><input type="radio" name="p" value="Caixa de ferramentas"> Caixa de ferramentas</div>
-    <div class="item" data-item="Extensão e Filtro de linha"><input type="radio" name="p" value="Extensão e Filtro de linha"> Extensão e Filtro de linha</div>
+
+    <h2>🛋️ EXTRAS ÚTEIS</h2>
+    <div class="item" data-item="Tapetes para casa"><input type="radio" name="p" value="Tapetes para casa"> Tapetes para casa</div>
+    <div class="item" data-item="Caixa organizadora"><input type="radio" name="p" value="Caixa organizadora"> Caixa organizadora</div>
+    <div class="item" data-item="Extensão / filtro de linha"><input type="radio" name="p" value="Extensão / filtro de linha"> Extensão / filtro de linha</div>
     <div class="item" data-item="Cabides"><input type="radio" name="p" value="Cabides"> Cabides</div>
-    <div class="item" data-item="Caixas organizadoras"><input type="radio" name="p" value="Caixas organizadoras"> Caixas organizadoras</div>
 
     <button id="btnConfirmar">Confirmar Presente ✅</button>
 </main>
@@ -94,8 +110,10 @@
 
     const popup = document.getElementById("popup");
     const inputNome = document.getElementById("campoNome");
-    const salvos = JSON.parse(localStorage.getItem("presentesEscolhidos")) || [];
+    const btnCont = document.getElementById("btnContinuarPopup");
+    const btnConf = document.getElementById("btnConfirmar");
 
+    const salvos = JSON.parse(localStorage.getItem("presentesEscolhidos")) || [];
     document.querySelectorAll(".item").forEach(el => {
         if(salvos.includes(el.dataset.item)) {
             el.classList.add("escolhido");
@@ -104,29 +122,43 @@
         }
     });
 
-    document.getElementById("btnContinuarPopup").addEventListener("click", function(e) {
-        e.preventDefault();
-        if(inputNome.value.trim().length < 2) { alert("Digite seu nome!"); return; }
+    const setupAction = (el, cb) => {
+        el.addEventListener("pointerdown", function(e) {
+            e.preventDefault();
+            cb.call(this);
+        }, { passive: false });
+    };
+
+    setupAction(btnCont, function() {
+        if(inputNome.value.trim().length < 2) {
+            alert("Por favor, digite seu nome completo!");
+            return;
+        }
         popup.style.display = "none";
+        window.scrollTo(0,0);
     });
 
-    document.getElementById("btnConfirmar").addEventListener("click", function(e) {
-        e.preventDefault();
+    setupAction(btnConf, function() {
         const sel = document.querySelector('input[name="p"]:checked');
-        if(!sel) { alert("Escolha um item!"); return; }
+        const nome = inputNome.value.trim();
+        if(!sel) { alert("Escolha um presente primeiro!"); return; }
 
         this.disabled = true;
         this.innerText = "Enviando...";
 
-        const d = new FormData();
-        d.append(ID_NOME, inputNome.value.trim());
-        d.append(ID_PRESENTE, sel.value);
+        const fd = new FormData();
+        fd.append(ID_NOME, nome);
+        fd.append(ID_PRESENTE, sel.value);
 
-        fetch(FORM_URL, { method: "POST", mode: "no-cors", body: d }).then(() => {
+        fetch(FORM_URL, { method: "POST", mode: "no-cors", body: fd }).then(() => {
             salvos.push(sel.value);
             localStorage.setItem("presentesEscolhidos", JSON.stringify(salvos));
-            alert("Confirmado! 💛");
+            alert("Confirmado! Obrigado, " + nome + " 💛");
             location.reload();
+        }).catch(() => {
+            alert("Erro de conexão.");
+            this.disabled = false;
+            this.innerText = "Confirmar Presente ✅";
         });
     });
 </script>

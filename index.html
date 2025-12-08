@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Chá de Cozinha 💛</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <style>
 :root {
   --principal:#e8c07d;
@@ -11,16 +11,16 @@
   --card:#ffffff;
   --texto:#3b2f1c;
 }
-body{margin:0;font-family:Arial,sans-serif;background:var(--fundo);color:var(--texto);}
+body{margin:0;font-family:Arial,sans-serif;background:var(--fundo);color:var(--texto);overflow-x:hidden;}
 header{background:var(--principal);text-align:center;padding:20px;}
 main{max-width:820px;margin:auto;padding:15px;}
 h2{margin-top:30px;border-bottom:2px solid var(--principal);padding-bottom:5px;}
 .item{background:var(--card);margin-top:8px;padding:10px;border-radius:8px;display:flex;gap:10px;align-items:center;}
 .item.escolhido{background:#eee;opacity:.6;text-decoration:line-through;}
-button{width:100%;margin:25px 0;padding:15px;font-size:18px;background:var(--principal);border:none;border-radius:10px;cursor:pointer;}
-#popup{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index: 1000;}
-#popupContent{background:#fff;padding:20px;border-radius:10px;width:90%;max-width:400px;text-align:center;}
-input[type=text]{width:100%;padding:12px;font-size:16px;margin-top:10px;box-sizing: border-box;}
+button{width:100%;margin:25px 0;padding:15px;font-size:18px;background:var(--principal);border:none;border-radius:10px;cursor:pointer;-webkit-appearance:none;}
+#popup{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;}
+#popupContent{background:#fff;padding:25px;border-radius:15px;width:85%;max-width:350px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+input[type=text]{width:100%;padding:15px;font-size:16px;margin-top:10px;box-sizing:border-box;border:1px solid #ccc;border-radius:8px;}
 </style>
 </head>
 <body>
@@ -32,147 +32,92 @@ input[type=text]{width:100%;padding:12px;font-size:16px;margin-top:10px;box-sizi
 
 <div id="popup">
   <div id="popupContent">
-    <h3>Digite seu nome</h3>
-    <input type="text" id="nome" placeholder="Seu nome">
-    <button onclick="fecharPopup()">Continuar</button>
+    <h3>Seja bem-vindo(a)!</h3>
+    <p>Digite seu nome para continuar:</p>
+    <input type="text" id="nomeUsuario" placeholder="Seu nome completo">
+    <button id="btnContinuar">Entrar na Lista</button>
   </div>
 </div>
 
 <main>
     <h2>🍳 COZINHA</h2>
-    <div class="item" data-item="Lixeira de cozinha (média ou grande)"><input type="radio" name="presente" value="Lixeira de cozinha (média ou grande)"> Lixeira de cozinha (média ou grande)</div>
+    <div class="item" data-item="Lixeira de cozinha"><input type="radio" name="presente" value="Lixeira de cozinha"> Lixeira de cozinha</div>
     <div class="item" data-item="Jogo de potes herméticos"><input type="radio" name="presente" value="Jogo de potes herméticos"> Jogo de potes herméticos</div>
-    <div class="item" data-item="Potes organizadores (arroz, feijão, açúcar e sal)"><input type="radio" name="presente" value="Potes organizadores (arroz, feijão, açúcar e sal)"> Potes organizadores (arroz, feijão, açúcar e sal)</div>
-    <div class="item" data-item="Potes de vidro com tampa"><input type="radio" name="presente" value="Potes de vidro com tampa"> Potes de vidro com tampa</div>
-    <div class="item" data-item="Potes plásticos com vedação"><input type="radio" name="presente" value="Potes plásticos com vedação"> Potes plásticos com vedação</div>
+    <div class="item" data-item="Potes organizadores"><input type="radio" name="presente" value="Potes organizadores"> Potes organizadores</div>
     <div class="item" data-item="Jogo de pratos"><input type="radio" name="presente" value="Jogo de pratos"> Jogo de pratos</div>
-    <div class="item" data-item="Jogo de talheres (metal)"><input type="radio" name="presente" value="Jogo de talheres (metal)"> Jogo de talheres (metal)</div>
-    <div class="item" data-item="Jogo de facas"><input type="radio" name="presente" value="Jogo de facas"> Jogo de facas</div>
     <div class="item" data-item="Frigideira antiaderente"><input type="radio" name="presente" value="Frigideira antiaderente"> Frigideira antiaderente</div>
-    <div class="item" data-item="Conjunto de panelas"><input type="radio" name="presente" value="Conjunto de panelas"> Conjunto de panelas</div>
-    <div class="item" data-item="Assadeiras (retangular e redonda)"><input type="radio" name="presente" value="Assadeiras (retangular e redonda)"> Assadeiras (retangular e redonda)</div>
-    <div class="item" data-item="Tigelas / bowls"><input type="radio" name="presente" value="Tigelas / bowls"> Tigelas / bowls</div>
-    <div class="item" data-item="Tábuas de corte"><input type="radio" name="presente" value="Tábuas de corte"> Tábuas de corte</div>
-    <div class="item" data-item="Conchas e espátulas (kit)"><input type="radio" name="presente" value="Conchas e espátulas (kit)"> Conchas e espátulas (kit)</div>
-    <div class="item" data-item="Escorredor de louça"><input type="radio" name="presente" value="Escorredor de louça"> Escorredor de louça</div>
-    <div class="item" data-item="Panos de prato"><input type="radio" name="presente" value="Panos de prato"> Panos de prato</div>
-    <div class="item" data-item="Ralador"><input type="radio" name="presente" value="Ralador"> Ralador</div>
-    <div class="item" data-item="Espremedor de frutas"><input type="radio" name="presente" value="Espremedor de frutas"> Espremedor de frutas</div>
-    <div class="item" data-item="Porta-temperos"><input type="radio" name="presente" value="Porta-temperos"> Porta-temperos</div>
-
-    <h2>☕ ELETROPORTÁTEIS</h2>
-    <div class="item" data-item="Air Fryer"><input type="radio" name="presente" value="Air Fryer"> Air Fryer</div>
-    <div class="item" data-item="Batedeira"><input type="radio" name="presente" value="Batedeira"> Batedeira</div>
-    <div class="item" data-item="Liquidificador"><input type="radio" name="presente" value="Liquidificador"> Liquidificador</div>
-    <div class="item" data-item="Mixer"><input type="radio" name="presente" value="Mixer"> Mixer</div>
-    <div class="item" data-item="Cafeteira"><input type="radio" name="presente" value="Cafeteira"> Cafeteira</div>
-    <div class="item" data-item="Sanduicheira preta (127v)"><input type="radio" name="presente" value="Sanduicheira preta (127v)"> Sanduicheira preta (127v)</div>
-    <div class="item" data-item="Micro-ondas (preto ou prata)"><input type="radio" name="presente" value="Micro-ondas (preto ou prata)"> Micro-ondas (preto ou prata)</div>
-    <div class="item" data-item="Garrafa térmica"><input type="radio" name="presente" value="Garrafa térmica"> Garrafa térmica</div>
-
-    <h2>🍽️ MESA & CAFÉ</h2>
-    <div class="item" data-item="Xícaras ou canecas"><input type="radio" name="presente" value="Xícaras ou canecas"> Xícaras ou canecas</div>
-    <div class="item" data-item="Copos (água e suco)"><input type="radio" name="presente" value="Copos (água e suco)"> Copos (água e suco)</div>
-    <div class="item" data-item="Taças (vinho ou bebidas)"><input type="radio" name="presente" value="Taças (vinho ou bebidas)"> Taças (vinho ou bebidas)</div>
-    <div class="item" data-item="Jarra de suco"><input type="radio" name="presente" value="Jarra de suco"> Jarra de suco</div>
-    <div class="item" data-item="Travessas para servir"><input type="radio" name="presente" value="Travessas para servir"> Travessas para servir</div>
-    <div class="item" data-item="Açucareiro"><input type="radio" name="presente" value="Açucareiro"> Açucareiro</div>
-    <div class="item" data-item="Porta-guardanapos"><input type="radio" name="presente" value="Porta-guardanapos"> Porta-guardanapos</div>
-
-    <h2>🧺 LAVANDERIA / LIMPEZA</h2>
-    <div class="item" data-item="Cesto de roupas sujas (preto)"><input type="radio" name="presente" value="Cesto de roupas sujas (preto)"> Cesto de roupas sujas (preto)</div>
-    <div class="item" data-item="Lixeira para lavanderia"><input type="radio" name="presente" value="Lixeira para lavanderia"> Lixeira para lavanderia</div>
-    <div class="item" data-item="Balde"><input type="radio" name="presente" value="Balde"> Balde</div>
-    <div class="item" data-item="Vassoura"><input type="radio" name="presente" value="Vassoura"> Vassoura</div>
-    <div class="item" data-item="Rodo"><input type="radio" name="presente" value="Rodo"> Rodo</div>
-    <div class="item" data-item="Pá de lixo com cabo"><input type="radio" name="presente" value="Pá de lixo com cabo"> Pá de lixo com cabo</div>
-    <div class="item" data-item="Varal de chão ou parede"><input type="radio" name="presente" value="Varal de chão ou parede"> Varal de chão ou parede</div>
-    <div class="item" data-item="Prendedores de roupa"><input type="radio" name="presente" value="Prendedores de roupa"> Prendedores de roupa</div>
-    <div class="item" data-item="Organizadores de produtos de limpeza"><input type="radio" name="presente" value="Organizadores de produtos de limpeza"> Organizadores de produtos de limpeza</div>
-
-    <h2>👕 PASSAR ROUPA</h2>
-    <div class="item" data-item="Ferro de passar a vapor"><input type="radio" name="presente" value="Ferro de passar a vapor"> Ferro de passar a vapor</div>
-    <div class="item" data-item="Tábua de passar"><input type="radio" name="presente" value="Tábua de passar"> Tábua de passar</div>
-
-    <h2>🚿 BANHEIRO</h2>
-    <div class="item" data-item="Lixeira de banheiro"><input type="radio" name="presente" value="Lixeira de banheiro"> Lixeira de banheiro</div>
-    <div class="item" data-item="Toalhas de banho (jogo casal)"><input type="radio" name="presente" value="Toalhas de banho (jogo casal)"> Toalhas de banho (jogo casal)</div>
-    <div class="item" data-item="Toalhas de rosto"><input type="radio" name="presente" value="Toalhas de rosto"> Toalhas de rosto</div>
-    <div class="item" data-item="Tapete de banheiro"><input type="radio" name="presente" value="Tapete de banheiro"> Tapete de banheiro</div>
-    <div class="item" data-item="Porta-sabonete"><input type="radio" name="presente" value="Porta-sabonete"> Porta-sabonete</div>
-    <div class="item" data-item="Porta-escova de dentes"><input type="radio" name="presente" value="Porta-escova de dentes"> Porta-escova de dentes</div>
-
-    <h2>🛋️ EXTRAS ÚTEIS</h2>
-    <div class="item" data-item="Tapetes para casa"><input type="radio" name="presente" value="Tapetes para casa"> Tapetes para casa</div>
-    <div class="item" data-item="Organizadores de gaveta"><input type="radio" name="presente" value="Organizadores de gaveta"> Organizadores de gaveta</div>
-    <div class="item" data-item="Caixa organizadora"><input type="radio" name="presente" value="Caixa organizadora"> Caixa organizadora</div>
-    <div class="item" data-item="Extensão / filtro de linha"><input type="radio" name="presente" value="Extensão / filtro de linha"> Extensão / filtro de linha</div>
+    
+    <h2>🧺 UTILIDADES</h2>
     <div class="item" data-item="Cabides"><input type="radio" name="presente" value="Cabides"> Cabides</div>
+    <div class="item" data-item="Extensão / filtro de linha"><input type="radio" name="presente" value="Extensão / filtro de linha"> Extensão / filtro de linha</div>
 
-    <button id="btnConfirmar" onclick="enviar()">Confirmar Presente ✅</button>
+    <button id="btnConfirmar">Confirmar Presente ✅</button>
 </main>
 
 <script>
-<script>
-// --- CONFIGURAÇÃO GOOGLE FORMS ---
-// URL de envio com o ID do seu formulário
-const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSc5hWc2UH-U3jASCdUcsnuomC6IH9UtouMZDAPrcPLEmpX7RA/formResponse";
+// --- CONFIGURAÇÕES ---
+const FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSc5hWc2UH-U3jASCdUcsnuomC6IH9UtouMZDAPrcPLEmpX7RA/formResponse";
+const ENTRY_NOME = "entry.656967251"; 
+const ENTRY_PRESENTE = "entry.6373781";
 
-// IDs entry extraídos dos seus prints
-const ID_ENTRY_NOME = "entry.656967251"; 
-const ID_ENTRY_PRESENTE = "entry.6373781";
+// Referências
+const pop = document.getElementById("popup");
+const inNome = document.getElementById("nomeUsuario");
+const btnCont = document.getElementById("btnContinuar");
+const btnConf = document.getElementById("btnConfirmar");
 
-const escolhidos = JSON.parse(localStorage.getItem("presentesEscolhidos")) || [];
-const inputNome = document.getElementById("nome");
-
-// Carregar itens já marcados localmente
+// Bloquear itens já escolhidos (LocalStorage)
+const salvos = JSON.parse(localStorage.getItem("presentesEscolhidos")) || [];
 document.querySelectorAll(".item").forEach(i => {
- if(escolhidos.includes(i.dataset.item)){
-  i.classList.add("escolhido");
-  const radio = i.querySelector("input");
-  if(radio) radio.disabled = true;
- }
+    if(salvos.includes(i.dataset.item)){
+        i.classList.add("escolhido");
+        const rad = i.querySelector("input");
+        if(rad) rad.disabled = true;
+    }
 });
 
-function fecharPopup(){
- if(!inputNome.value.trim()){ alert("Por favor, digite seu nome"); return; }
- document.getElementById("popup").style.display = "none";
-}
+// AÇÃO: Botão Continuar (Popup)
+btnCont.addEventListener("click", function() {
+    if(inNome.value.trim().length < 3) {
+        alert("Por favor, digite seu nome completo.");
+        return;
+    }
+    pop.style.display = "none";
+});
 
-function enviar(){
- const itemMarcado = document.querySelector('input[name="presente"]:checked');
- const nomeValue = inputNome.value.trim();
+// AÇÃO: Botão Enviar
+btnConf.addEventListener("click", function() {
+    const selecionado = document.querySelector('input[name="presente"]:checked');
+    const nome = inNome.value.trim();
 
- if(!nomeValue || !itemMarcado){ 
-   alert("Selecione um presente e preencha seu nome!"); 
-   return; 
- }
+    if(!selecionado) {
+        alert("Escolha um presente na lista primeiro.");
+        return;
+    }
 
- // Desativar botão para evitar múltiplos cliques
- const btn = document.getElementById("btnConfirmar");
- btn.disabled = true;
- btn.innerText = "Confirmando...";
+    btnConf.disabled = true;
+    btnConf.innerText = "Enviando...";
 
- const formData = new FormData();
- formData.append(ID_ENTRY_NOME, nomeValue);
- formData.append(ID_ENTRY_PRESENTE, itemMarcado.value);
+    const dados = new FormData();
+    dados.append(ENTRY_NOME, nome);
+    dados.append(ENTRY_PRESENTE, selecionado.value);
 
- // Enviar para o Google Forms em segundo plano
- fetch(GOOGLE_FORM_URL, {
-  method: "POST",
-  mode: "no-cors",
-  body: formData
- }).then(() => {
-  // Salva no navegador do usuário para riscar o item
-  escolhidos.push(itemMarcado.value);
-  localStorage.setItem("presentesEscolhidos", JSON.stringify(escolhidos));
-  
-  alert("Presente confirmado com sucesso! 💛");
-  location.reload();
- }).catch(err => {
-  alert("Erro ao enviar. Verifique sua internet.");
-  btn.disabled = false;
-  btn.innerText = "Confirmar Presente ✅";
- });
-}
+    fetch(FORM_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: dados
+    }).then(() => {
+        salvos.push(selecionado.value);
+        localStorage.setItem("presentesEscolhidos", JSON.stringify(salvos));
+        alert("Obrigado, " + nome + "! Confirmado com sucesso. 💛");
+        location.reload();
+    }).catch(() => {
+        alert("Erro de conexão. Tente novamente.");
+        btnConf.disabled = false;
+        btnConf.innerText = "Confirmar Presente ✅";
+    });
+});
 </script>
+
+</body>
+</html>

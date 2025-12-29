@@ -109,76 +109,180 @@
 </main>
 
 <script>
-    const FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSc5hWc2UH-U3jASCdUcsnuomC6IH9UtouMZDAPrcPLEmpX7RA/formResponse";
-    const ID_NOME = "entry.656967251";
-    const ID_PRESENTE = "entry.6373781";
+const API_URL = "COLE_AQUI_A_URL_DO_APPS_SCRIPT";
 
-    const popup = document.getElementById("popup");
-    const header = document.getElementById("cabecalho");
-    const inputNome = document.getElementById("campoNome");
-    const btnCont = document.getElementById("btnContinuarPopup");
-    const btnConf = document.getElementById("btnConfirmar");
+const popup = document.getElementById("popup");
+const header = document.getElementById("cabecalho");
+const inputNome = document.getElementById("campoNome");
+const btnCont = document.getElementById("btnContinuarPopup");
+const btnConf = document.getElementById("btnConfirmar");
 
-    const salvos = JSON.parse(localStorage.getItem("presentesEscolhidos")) || [];
-    
+// =======================
+// BLOQUEIO GLOBAL (Sheets)
+// =======================
+fetch(API_URL)
+  .then(res => res.json())
+  .then(escolhidos => {
     document.querySelectorAll(".item").forEach(el => {
-        if(salvos.includes(el.dataset.item)) {
-            el.classList.add("escolhido");
-            const input = el.querySelector("input");
-            if(input) input.disabled = true;
-        }
+      if (escolhidos.includes(el.dataset.item)) {
+        el.classList.add("escolhido");
+        const input = el.querySelector("input");
+        if (input) input.disabled = true;
+      }
     });
+  });
 
-    const setupAction = (el, cb) => {
-        el.addEventListener("pointerdown", function(e) {
-            e.preventDefault();
-            cb.call(this);
-        }, { passive: false });
-    };
+// =======================
+// TRUQUE RESET (ADMIN)
+// =======================
+let cliquesReset = 0;
+header.addEventListener("pointerdown", function () {
+  cliquesReset++;
+  if (cliquesReset === 5) {
+    if (confirm("Admin: Deseja resetar TODOS os presentes?")) {
+      alert("⚠️ O reset deve ser feito direto na planilha.");
+    }
+    cliquesReset = 0;
+  }
+  setTimeout(() => (cliquesReset = 0), 3000);
+});
 
-    // TRUQUE DO RESET: Contador de cliques no cabeçalho
-    let cliquesReset = 0;
-    header.addEventListener("pointerdown", function() {
-        cliquesReset++;
-        if(cliquesReset === 5) {
-            if(confirm("Admin: Deseja resetar sua lista local?")) {
-                localStorage.removeItem("presentesEscolhidos");
-                location.reload();
-            }
-            cliquesReset = 0;
-        }
-        setTimeout(() => { cliquesReset = 0; }, 3000); // Reseta o contador após 3 segundos
+// =======================
+// POPUP NOME
+// =======================
+btnCont.addEventListener("click", () => {
+  if (inputNome.value.trim().length < 2) {
+    alert("Digite seu nome completo!");
+    return;
+  }
+  popup.style.display = "none";
+  window.scrollTo(0, 0);
+});
+
+// =======================
+// CONFIRMAR PRESENTE
+// =======================
+btnConf.addEventListener("click", () => {
+  const sel = document.querySelector('input[name="p"]:checked');
+  const nome = inputNome.value.trim();
+
+  if (!sel) {
+    alert("Escolha um presente primeiro!");
+    return;
+  }
+
+  btnConf.disabled = true;
+  btnConf.innerText = "Enviando...";
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `nome=${encodeURIComponent(nome)}&presente=${encodeURIComponent(sel.value)}`
+  })
+    .then(res => res.text())
+    .then(resp => {
+      if (resp === "OK") {
+        alert("🎉 Presente confirmado com sucesso!");
+        location.reload();
+      } else {
+        alert("😢 Esse presente já foi escolhido por outra pessoa.");
+        location.reload();
+      }
+    })
+    .catch(() => {
+      alert("Erro de conexão. Tente novamente.");
+      btnConf.disabled = false;
+      btnConf.innerText = "Confirmar Presente ✅";
     });
+});
+</script>
+<script>
+const API_URL = "COLE_AQUI_A_URL_DO_APPS_SCRIPT";
 
-    setupAction(btnCont, function() {
-        if(inputNome.value.trim().length < 2) { alert("Digite seu nome!"); return; }
-        popup.style.display = "none";
-        window.scrollTo(0,0);
+const popup = document.getElementById("popup");
+const header = document.getElementById("cabecalho");
+const inputNome = document.getElementById("campoNome");
+const btnCont = document.getElementById("btnContinuarPopup");
+const btnConf = document.getElementById("btnConfirmar");
+
+// =======================
+// BLOQUEIO GLOBAL (Sheets)
+// =======================
+fetch(API_URL)
+  .then(res => res.json())
+  .then(escolhidos => {
+    document.querySelectorAll(".item").forEach(el => {
+      if (escolhidos.includes(el.dataset.item)) {
+        el.classList.add("escolhido");
+        const input = el.querySelector("input");
+        if (input) input.disabled = true;
+      }
     });
+  });
 
-    setupAction(btnConf, function() {
-        const sel = document.querySelector('input[name="p"]:checked');
-        const nome = inputNome.value.trim();
-        if(!sel) { alert("Escolha um presente primeiro!"); return; }
+// =======================
+// TRUQUE RESET (ADMIN)
+// =======================
+let cliquesReset = 0;
+header.addEventListener("pointerdown", function () {
+  cliquesReset++;
+  if (cliquesReset === 5) {
+    if (confirm("Admin: Deseja resetar TODOS os presentes?")) {
+      alert("⚠️ O reset deve ser feito direto na planilha.");
+    }
+    cliquesReset = 0;
+  }
+  setTimeout(() => (cliquesReset = 0), 3000);
+});
 
-        this.disabled = true;
-        this.innerText = "Enviando...";
+// =======================
+// POPUP NOME
+// =======================
+btnCont.addEventListener("click", () => {
+  if (inputNome.value.trim().length < 2) {
+    alert("Digite seu nome completo!");
+    return;
+  }
+  popup.style.display = "none";
+  window.scrollTo(0, 0);
+});
 
-        const fd = new FormData();
-        fd.append(ID_NOME, nome);
-        fd.append(ID_PRESENTE, sel.value);
+// =======================
+// CONFIRMAR PRESENTE
+// =======================
+btnConf.addEventListener("click", () => {
+  const sel = document.querySelector('input[name="p"]:checked');
+  const nome = inputNome.value.trim();
 
-        fetch(FORM_URL, { method: "POST", mode: "no-cors", body: fd }).then(() => {
-            salvos.push(sel.value);
-            localStorage.setItem("presentesEscolhidos", JSON.stringify(salvos));
-            alert("Confirmado com sucesso! 💛");
-            location.reload();
-        }).catch(() => {
-            alert("Erro de conexão.");
-            this.disabled = false;
-            this.innerText = "Confirmar Presente ✅";
-        });
+  if (!sel) {
+    alert("Escolha um presente primeiro!");
+    return;
+  }
+
+  btnConf.disabled = true;
+  btnConf.innerText = "Enviando...";
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `nome=${encodeURIComponent(nome)}&presente=${encodeURIComponent(sel.value)}`
+  })
+    .then(res => res.text())
+    .then(resp => {
+      if (resp === "OK") {
+        alert("🎉 Presente confirmado com sucesso!");
+        location.reload();
+      } else {
+        alert("😢 Esse presente já foi escolhido por outra pessoa.");
+        location.reload();
+      }
+    })
+    .catch(() => {
+      alert("Erro de conexão. Tente novamente.");
+      btnConf.disabled = false;
+      btnConf.innerText = "Confirmar Presente ✅";
     });
+});
 </script>
 </body>
 </html>

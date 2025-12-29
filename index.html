@@ -1,288 +1,212 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Chá de Cozinha 💛</title>
-    <style>
-        :root { --principal:#e8c07d; --fundo:#faf7f2; --card:#ffffff; --texto:#3b2f1c; }
-        body { margin:0; font-family: sans-serif; background:var(--fundo); color:var(--texto); }
-        header { background:var(--principal); text-align:center; padding:20px; cursor: pointer; }
-        main { max-width:600px; margin:auto; padding:15px; padding-bottom: 150px; }
-        h2 { border-bottom:2px solid var(--principal); padding-bottom:5px; margin-top: 25px; font-size: 1.2rem; }
-        .item { background:var(--card); margin-top:8px; padding:12px; border-radius:8px; display:flex; gap:10px; align-items:center; border: 1px solid #ddd; }
-        .item.escolhido { background:#eee; opacity:.5; text-decoration:line-through; }
-        button { width:100%; padding:15px; font-size:18px; background:var(--principal); border:none; border-radius:10px; cursor:pointer; font-weight: bold; }
-        #popup { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; z-index:9999; }
-        #popupContent { background:#fff; padding:25px; border-radius:15px; width:80%; max-width:320px; text-align:center; }
-        input[type=text] { width:100%; padding:15px; font-size:16px; margin: 15px 0; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; }
-        #btnConfirmar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 500px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); z-index: 100; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Chá de Cozinha 💛</title>
+
+<style>
+:root { --principal:#e8c07d; --fundo:#faf7f2; --card:#ffffff; --texto:#3b2f1c; }
+body { margin:0; font-family:sans-serif; background:var(--fundo); color:var(--texto); }
+header { background:var(--principal); text-align:center; padding:20px; cursor:pointer; }
+main { max-width:600px; margin:auto; padding:15px; padding-bottom:150px; }
+h2 { border-bottom:2px solid var(--principal); padding-bottom:5px; margin-top:25px; }
+.item { background:var(--card); margin-top:8px; padding:12px; border-radius:8px; display:flex; gap:10px; align-items:center; border:1px solid #ddd; }
+.item.escolhido { background:#eee; opacity:.5; text-decoration:line-through; }
+button { width:100%; padding:15px; font-size:18px; background:var(--principal); border:none; border-radius:10px; cursor:pointer; font-weight:bold; }
+#popup { position:fixed; inset:0; background:rgba(0,0,0,.85); display:flex; align-items:center; justify-content:center; z-index:9999; }
+#popupContent { background:#fff; padding:25px; border-radius:15px; width:80%; max-width:320px; text-align:center; }
+input[type=text] { width:100%; padding:15px; font-size:16px; margin:15px 0; border:1px solid #ccc; border-radius:8px; }
+#btnConfirmar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); width:90%; max-width:500px; }
+</style>
 </head>
+
 <body>
 
 <header id="cabecalho">
-    <h1>💛 Chá de Cozinha 💛</h1>
+<h1>💛 Chá de Cozinha 💛</h1>
 </header>
 
 <div id="popup">
-    <div id="popupContent">
-        <h3>Seja bem-vindo(a)!</h3>
-        <input type="text" id="campoNome" placeholder="Digite seu nome completo" autocomplete="off">
-        <button id="btnContinuarPopup">Entrar na Lista</button>
-    </div>
+<div id="popupContent">
+<h3>Seja bem-vindo(a)!</h3>
+<input type="text" id="campoNome" placeholder="Digite seu nome completo">
+<button id="btnContinuarPopup">Entrar na Lista</button>
+</div>
 </div>
 
 <main>
-    <h2>🍳 COZINHA</h2>
-    <div class="item" data-item="Lixeira de cozinha (média ou grande)"><input type="radio" name="p" value="Lixeira de cozinha (média ou grande)"> Lixeira de cozinha (média ou grande)</div>
-    <div class="item" data-item="Jogo de potes herméticos (pequenos)"><input type="radio" name="p" value="Jogo de potes herméticos (pequenos)"> Jogo de potes herméticos (pequenos)</div>
-    <div class="item" data-item="Potes organizadores (arroz, feijão, açúcar e sal)"><input type="radio" name="p" value="Potes organizadores (arroz, feijão, açúcar e sal)"> Potes organizadores (arroz, feijão, açúcar e sal)</div>
-    <div class="item" data-item="Potes de vidro com tampa"><input type="radio" name="p" value="Potes de vidro com tampa"> Potes de vidro com tampa</div>
-    <div class="item" data-item="Potes plásticos com vedação"><input type="radio" name="p" value="Potes plásticos com vedação"> Potes plásticos com vedação</div>
-    <div class="item" data-item="Jogo de pratos"><input type="radio" name="p" value="Jogo de pratos"> Jogo de pratos</div>
-    <div class="item" data-item="Jogo de talheres (metal)"><input type="radio" name="p" value="Jogo de talheres (metal)"> Jogo de talheres (metal)</div>
-    <div class="item" data-item="Jogo de facas"><input type="radio" name="p" value="Jogo de facas"> Jogo de facas</div>
-    <div class="item" data-item="Frigideira antiaderente"><input type="radio" name="p" value="Frigideira antiaderente"> Frigideira antiaderente</div>
-    <div class="item" data-item="Kit fondue"><input type="radio" name="p" value="Kit fondue"> Kit fondue</div>
-    <div class="item" data-item="Assadeiras (retangular e redonda)"><input type="radio" name="p" value="Assadeiras (retangular e redonda)"> Assadeiras (retangular e redonda)</div>
-    <div class="item" data-item="Tigelas / bowls"><input type="radio" name="p" value="Tigelas / bowls"> Tigelas / bowls</div>
-    <div class="item" data-item="Tábuas de corte"><input type="radio" name="p" value="Tábuas de corte"> Tábuas de corte</div>
-    <div class="item" data-item="Kit 3 Fouet Inox Batedor Ovos"><input type="radio" name="p" value="Kit 3 Fouet Inox Batedor Ovos"> Kit 3 Fouet Inox Batedor Ovos</div>
-    <div class="item" data-item="Escorredor de louça"><input type="radio" name="p" value="Escorredor de louça"> Escorredor de louça</div>
-    <div class="item" data-item="Panos de prato"><input type="radio" name="p" value="Panos de prato"> Panos de prato</div>
-    <div class="item" data-item="Utensílios De Cozinha Com Cabo Silicone com facas"><input type="radio" name="p" value="Utensílios De Cozinha Com Cabo Silicone com facas"> Utensílios De Cozinha Com Cabo Silicone com facas</div>
-    <div class="item" data-item="jogo potes hermérticos (grandes) "><input type="radio" name="p" value="jogo potes hermérticos (grandes)"> jogo potes hermérticos (grandes)</div>
-    <div class="item" data-item="Porta-temperos"><input type="radio" name="p" value="Porta-temperos"> Porta-temperos</div>
-    <div class="item" data-item="Kit 3 Formas Antiaderente Fundo Removível "><input type="radio" name="p" value="Kit 3 Formas Antiaderente Fundo Removível"> Kit 3 Formas Antiaderente Fundo Removível</div>
-    <div class="item" data-item="kit medidores de xícaras "><input type="radio" name="p" value="kit medidores de xícaras"> kit medidores de xícaras </div>
-    <div class="item" data-item="Espátulas mateigas"><input type="radio" name="p" value="Espátulas mateigas"> Espátulas mateigas</div>
-    <div class="item" data-item="Pipoqueira elétrica"><input type="radio" name="p" value="Pipoqueira elétrica">Pipoqueira elétrica</div>
-    
-    <h2>☕ ELETROPORTÁTEIS</h2>
-    <div class="item" data-item="Extrator de suco"><input type="radio" name="p" value="Extrator de suco"> Extrator de suco</div>
-    <div class="item" data-item="Batedeira"><input type="radio" name="p" value="Batedeira"> Batedeira</div>
-    <div class="item" data-item="Liquidificador"><input type="radio" name="p" value="Liquidificador"> Liquidificador</div>
-    <div class="item" data-item="Mixer"><input type="radio" name="p" value="Mixer"> Mixer</div>
-    <div class="item" data-item="Cafeteira"><input type="radio" name="p" value="Cafeteira"> Cafeteira</div>
-    <div class="item" data-item="Sanduicheira preta (127v)"><input type="radio" name="p" value="Sanduicheira preta (127v)"> Sanduicheira preta (127v)</div>
-    <div class="item" data-item="Micro-ondas"><input type="radio" name="p" value="Micro-ondas"> Micro-ondas</div>
-    <div class="item" data-item="multi-processador 3 em 1"><input type="radio" name="p" value="multi-processador 3 em 1"> multi-processador 3 em 1</div>
-    <div class="item" data-item="Purificador de água"><input type="radio" name="p" value="Purificador de água"> Purificador de água</div>
-     <div class="item" data-item="Panela de arroz elétrica"><input type="radio" name="p" value="Panela de arroz elétrica">Panela de arroz elétrica</div>
-   
-    <h2>🍽️ CAMA, MESA & CAFÉ</h2>
-    <div class="item" data-item="Xícaras ou canecas"><input type="radio" name="p" value="Xícaras ou canecas"> Xícaras ou canecas</div>
-    <div class="item" data-item="Copos (água e suco)"><input type="radio" name="p" value="Copos (água e suco)"> Copos (água e suco)</div>
-    <div class="item" data-item="Taças (vinho ou bebidas)"><input type="radio" name="p" value="Taças (vinho ou bebidas)"> Taças (vinho ou bebidas)</div>
-    <div class="item" data-item="Jarra de suco"><input type="radio" name="p" value="Jarra de suco"> Jarra de suco</div>
-    <div class="item" data-item="Travessas para servir"><input type="radio" name="p" value="Travessas para servir"> Travessas para servir</div>
-    <div class="item" data-item="Jogo de cama"><input type="radio" name="p" value="Jogo de cama"> Jogo de cama</div>
-    <div class="item" data-item="Jogo de cortinas"><input type="radio" name="p" value="Jogo de cortinas"> Jogo de cortinas</div>
-    <div class="item" data-item="Garrafa térmica"><input type="radio" name="p" value="Garrafa térmica"> Garrafa térmica</div>
-   
-    <h2>🧺 LAVANDERIA E LIMPEZA</h2>
-    <div class="item" data-item="Cesto de roupas sujas"><input type="radio" name="p" value="Cesto de roupas sujas"> Cesto de roupas sujas</div>
-    <div class="item" data-item="Lixeira para lavanderia"><input type="radio" name="p" value="Lixeira para lavanderia"> Lixeira para lavanderia</div>
-    <div class="item" data-item="Balde, Vassoura e Rodo"><input type="radio" name="p" value="Balde, Vassoura e Rodo"> Balde, Vassoura e Rodo</div>
-    <div class="item" data-item="Varal e Prendedores"><input type="radio" name="p" value="Varal e Prendedores"> Varal e Prendedores</div>
-    <div class="item" data-item="Ferro de passar a vapor"><input type="radio" name="p" value="Ferro de passar a vapor"> Ferro de passar a vapor</div>
-    <div class="item" data-item="Tábua de passar"><input type="radio" name="p" value="Tábua de passar"> Tábua de passar</div>
-    <div class="item" data-item="Máquina de lavar 10kg"><input type="radio" name="p" value="Máquina de lavar 10kg"> Máquina de lavar 10kg</div>
-   
-    <h2>🚿 BANHEIRO</h2>
-    <div class="item" data-item="Lixeira de banheiro"><input type="radio" name="p" value="Lixeira de banheiro"> Lixeira de banheiro</div>
-    <div class="item" data-item="Jogo de toalhas banho"><input type="radio" name="p" value="Jogo de toalhas banho"> Jogo de toalhas banho</div>
-    <div class="item" data-item="Tapete de banheiro"><input type="radio" name="p" value="Tapete de banheiro"> Tapete de banheiro</div>
-    <div class="item" data-item="Conjunto de Banheiro"><input type="radio" name="p" value="Conjunto de Banheiro"> Conjunto de Banheiro</div>
 
-    <h2>🛠️ FERRAMENTAS</h2>
-    <div class="item" data-item="Caixa de ferramentas"><input type="radio" name="p" value="Caixa de ferramentas"> Caixa de ferramentas</div>
+<h2>🍳 COZINHA</h2>
+<div class="item" data-item="Lixeira de cozinha (média ou grande)"><input type="radio" name="p" value="Lixeira de cozinha (média ou grande)"> Lixeira de cozinha (média ou grande)</div>
+<div class="item" data-item="Jogo de potes herméticos (pequenos)"><input type="radio" name="p" value="Jogo de potes herméticos (pequenos)"> Jogo de potes herméticos (pequenos)</div>
+<div class="item" data-item="Potes organizadores (arroz, feijão, açúcar e sal)"><input type="radio" name="p" value="Potes organizadores (arroz, feijão, açúcar e sal)"> Potes organizadores (arroz, feijão, açúcar e sal)</div>
+<div class="item" data-item="Potes de vidro com tampa"><input type="radio" name="p" value="Potes de vidro com tampa"> Potes de vidro com tampa</div>
+<div class="item" data-item="Cabides"><input type="radio" name="p" value="Cabides"> Cabides</div>
 
-    <h2>🛋️ EXTRAS ÚTEIS</h2>
-    <div class="item" data-item="Tapetes para casa"><input type="radio" name="p" value="Tapetes para casa"> Tapetes para casa</div>
-    <div class="item" data-item="Kit Caixa organizadora"><input type="radio" name="p" value="Kit Caixa organizadora"> Kit Caixa organizadora</div>
-    <div class="item" data-item="Extensão / filtro de linha"><input type="radio" name="p" value="Extensão / filtro de linha"> Extensão / filtro de linha</div>
-    <div class="item" data-item="Cabides"><input type="radio" name="p" value="Cabides"> Cabides</div>
-
-    <button id="btnConfirmar">Confirmar Presente ✅</button>
+<button id="btnConfirmar">Confirmar Presente ✅</button>
 </main>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbx0BRnzKgq8N93zinfHdmG2i5GUieW0W1vLx-5VUpknAlIu7-fBs7KPvQ5ZJ_hL9c7y/exec";
 
 const popup = document.getElementById("popup");
-const header = document.getElementById("cabecalho");
 const inputNome = document.getElementById("campoNome");
 const btnCont = document.getElementById("btnContinuarPopup");
 const btnConf = document.getElementById("btnConfirmar");
 
-// =======================
-// BLOQUEIO GLOBAL (Sheets)
-// =======================
+// 🔒 BLOQUEIO GLOBAL
 fetch(API_URL)
-  .then(res => res.json())
+  .then(r => r.json())
   .then(escolhidos => {
     document.querySelectorAll(".item").forEach(el => {
       if (escolhidos.includes(el.dataset.item)) {
         el.classList.add("escolhido");
-        const input = el.querySelector("input");
-        if (input) input.disabled = true;
+        el.querySelector("input").disabled = true;
       }
     });
   });
 
-// =======================
-// TRUQUE RESET (ADMIN)
-// =======================
-let cliquesReset = 0;
-header.addEventListener("pointerdown", function () {
-  cliquesReset++;
-  if (cliquesReset === 5) {
-    if (confirm("Admin: Deseja resetar TODOS os presentes?")) {
-      alert("⚠️ O reset deve ser feito direto na planilha.");
-    }
-    cliquesReset = 0;
-  }
-  setTimeout(() => (cliquesReset = 0), 3000);
-});
-
-// =======================
-// POPUP NOME
-// =======================
-btnCont.addEventListener("click", () => {
+// 👤 ENTRAR
+btnCont.onclick = () => {
   if (inputNome.value.trim().length < 2) {
-    alert("Digite seu nome completo!");
+    alert("Digite seu nome completo");
     return;
   }
   popup.style.display = "none";
-  window.scrollTo(0, 0);
-});
+};
 
-// =======================
-// CONFIRMAR PRESENTE
-// =======================
-btnConf.addEventListener("click", () => {
+// ✅ CONFIRMAR
+btnConf.onclick = () => {
   const sel = document.querySelector('input[name="p"]:checked');
-  const nome = inputNome.value.trim();
-
-  if (!sel) {
-    alert("Escolha um presente primeiro!");
-    return;
-  }
+  if (!sel) return alert("Escolha um presente");
 
   btnConf.disabled = true;
   btnConf.innerText = "Enviando...";
 
   fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `nome=${encodeURIComponent(nome)}&presente=${encodeURIComponent(sel.value)}`
+    method:"POST",
+    headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+    body:`nome=${encodeURIComponent(inputNome.value)}&presente=${encodeURIComponent(sel.value)}`
   })
-    .then(res => res.text())
-    .then(resp => {
-      if (resp === "OK") {
-        alert("🎉 Presente confirmado com sucesso!");
-        location.reload();
-      } else {
-        alert("😢 Esse presente já foi escolhido por outra pessoa.");
-        location.reload();
-      }
-    })
-    .catch(() => {
-      alert("Erro de conexão. Tente novamente.");
-      btnConf.disabled = false;
-      btnConf.innerText = "Confirmar Presente ✅";
-    });
-});
+  .then(r => r.text())
+  .then(resp => {
+    if (resp === "OK") {
+      alert("🎉 Presente confirmado!");
+      location.reload();
+    } else {
+      alert("❌ Presente já escolhido");
+      location.reload();
+    }
+  });
+};
 </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Chá de Cozinha 💛</title>
+
+<style>
+:root { --principal:#e8c07d; --fundo:#faf7f2; --card:#ffffff; --texto:#3b2f1c; }
+body { margin:0; font-family:sans-serif; background:var(--fundo); color:var(--texto); }
+header { background:var(--principal); text-align:center; padding:20px; cursor:pointer; }
+main { max-width:600px; margin:auto; padding:15px; padding-bottom:150px; }
+h2 { border-bottom:2px solid var(--principal); padding-bottom:5px; margin-top:25px; }
+.item { background:var(--card); margin-top:8px; padding:12px; border-radius:8px; display:flex; gap:10px; align-items:center; border:1px solid #ddd; }
+.item.escolhido { background:#eee; opacity:.5; text-decoration:line-through; }
+button { width:100%; padding:15px; font-size:18px; background:var(--principal); border:none; border-radius:10px; cursor:pointer; font-weight:bold; }
+#popup { position:fixed; inset:0; background:rgba(0,0,0,.85); display:flex; align-items:center; justify-content:center; z-index:9999; }
+#popupContent { background:#fff; padding:25px; border-radius:15px; width:80%; max-width:320px; text-align:center; }
+input[type=text] { width:100%; padding:15px; font-size:16px; margin:15px 0; border:1px solid #ccc; border-radius:8px; }
+#btnConfirmar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); width:90%; max-width:500px; }
+</style>
+</head>
+
+<body>
+
+<header id="cabecalho">
+<h1>💛 Chá de Cozinha 💛</h1>
+</header>
+
+<div id="popup">
+<div id="popupContent">
+<h3>Seja bem-vindo(a)!</h3>
+<input type="text" id="campoNome" placeholder="Digite seu nome completo">
+<button id="btnContinuarPopup">Entrar na Lista</button>
+</div>
+</div>
+
+<main>
+
+<h2>🍳 COZINHA</h2>
+<div class="item" data-item="Lixeira de cozinha (média ou grande)"><input type="radio" name="p" value="Lixeira de cozinha (média ou grande)"> Lixeira de cozinha (média ou grande)</div>
+<div class="item" data-item="Jogo de potes herméticos (pequenos)"><input type="radio" name="p" value="Jogo de potes herméticos (pequenos)"> Jogo de potes herméticos (pequenos)</div>
+<div class="item" data-item="Potes organizadores (arroz, feijão, açúcar e sal)"><input type="radio" name="p" value="Potes organizadores (arroz, feijão, açúcar e sal)"> Potes organizadores (arroz, feijão, açúcar e sal)</div>
+<div class="item" data-item="Potes de vidro com tampa"><input type="radio" name="p" value="Potes de vidro com tampa"> Potes de vidro com tampa</div>
+<div class="item" data-item="Cabides"><input type="radio" name="p" value="Cabides"> Cabides</div>
+
+<button id="btnConfirmar">Confirmar Presente ✅</button>
+</main>
+
 <script>
-const API_URL = "COLE_AQUI_A_URL_DO_APPS_SCRIPT";
+const API_URL = "https://script.google.com/macros/s/AKfycbx0BRnzKgq8N93zinfHdmG2i5GUieW0W1vLx-5VUpknAlIu7-fBs7KPvQ5ZJ_hL9c7y/exec";
 
 const popup = document.getElementById("popup");
-const header = document.getElementById("cabecalho");
 const inputNome = document.getElementById("campoNome");
 const btnCont = document.getElementById("btnContinuarPopup");
 const btnConf = document.getElementById("btnConfirmar");
 
-// =======================
-// BLOQUEIO GLOBAL (Sheets)
-// =======================
+// 🔒 BLOQUEIO GLOBAL
 fetch(API_URL)
-  .then(res => res.json())
+  .then(r => r.json())
   .then(escolhidos => {
     document.querySelectorAll(".item").forEach(el => {
       if (escolhidos.includes(el.dataset.item)) {
         el.classList.add("escolhido");
-        const input = el.querySelector("input");
-        if (input) input.disabled = true;
+        el.querySelector("input").disabled = true;
       }
     });
   });
 
-// =======================
-// TRUQUE RESET (ADMIN)
-// =======================
-let cliquesReset = 0;
-header.addEventListener("pointerdown", function () {
-  cliquesReset++;
-  if (cliquesReset === 5) {
-    if (confirm("Admin: Deseja resetar TODOS os presentes?")) {
-      alert("⚠️ O reset deve ser feito direto na planilha.");
-    }
-    cliquesReset = 0;
-  }
-  setTimeout(() => (cliquesReset = 0), 3000);
-});
-
-// =======================
-// POPUP NOME
-// =======================
-btnCont.addEventListener("click", () => {
+// 👤 ENTRAR
+btnCont.onclick = () => {
   if (inputNome.value.trim().length < 2) {
-    alert("Digite seu nome completo!");
+    alert("Digite seu nome completo");
     return;
   }
   popup.style.display = "none";
-  window.scrollTo(0, 0);
-});
+};
 
-// =======================
-// CONFIRMAR PRESENTE
-// =======================
-btnConf.addEventListener("click", () => {
+// ✅ CONFIRMAR
+btnConf.onclick = () => {
   const sel = document.querySelector('input[name="p"]:checked');
-  const nome = inputNome.value.trim();
-
-  if (!sel) {
-    alert("Escolha um presente primeiro!");
-    return;
-  }
+  if (!sel) return alert("Escolha um presente");
 
   btnConf.disabled = true;
   btnConf.innerText = "Enviando...";
 
   fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `nome=${encodeURIComponent(nome)}&presente=${encodeURIComponent(sel.value)}`
+    method:"POST",
+    headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+    body:`nome=${encodeURIComponent(inputNome.value)}&presente=${encodeURIComponent(sel.value)}`
   })
-    .then(res => res.text())
-    .then(resp => {
-      if (resp === "OK") {
-        alert("🎉 Presente confirmado com sucesso!");
-        location.reload();
-      } else {
-        alert("😢 Esse presente já foi escolhido por outra pessoa.");
-        location.reload();
-      }
-    })
-    .catch(() => {
-      alert("Erro de conexão. Tente novamente.");
-      btnConf.disabled = false;
-      btnConf.innerText = "Confirmar Presente ✅";
-    });
-});
+  .then(r => r.text())
+  .then(resp => {
+    if (resp === "OK") {
+      alert("🎉 Presente confirmado!");
+      location.reload();
+    } else {
+      alert("❌ Presente já escolhido");
+      location.reload();
+    }
+  });
+};
 </script>
+
 </body>
 </html>

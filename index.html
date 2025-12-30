@@ -10,29 +10,29 @@
 body { margin:0; font-family:sans-serif; background:var(--fundo); color:var(--texto); }
 header { background:var(--principal); text-align:center; padding:20px; cursor:pointer; }
 main { max-width:600px; margin:auto; padding:15px; padding-bottom:150px; }
-h2 { border-bottom:2px solid var(--principal); padding-bottom:5px; margin-top:25px; }
+h2 { border-bottom:2px solid var(--principal); padding-bottom:5px; margin-top:25px; font-size:1.2rem; }
 .item { background:var(--card); margin-top:8px; padding:12px; border-radius:8px; display:flex; gap:10px; align-items:center; border:1px solid #ddd; }
 .item.escolhido { background:#eee; opacity:.5; text-decoration:line-through; }
 button { width:100%; padding:15px; font-size:18px; background:var(--principal); border:none; border-radius:10px; cursor:pointer; font-weight:bold; }
+#btnConfirmar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); width:90%; max-width:500px; z-index:100; }
 #popup { position:fixed; inset:0; background:rgba(0,0,0,.85); display:flex; align-items:center; justify-content:center; z-index:9999; }
 #popupContent { background:#fff; padding:25px; border-radius:15px; width:80%; max-width:320px; text-align:center; }
-input[type=text] { width:100%; padding:15px; font-size:16px; margin:15px 0; border:1px solid #ccc; border-radius:8px; }
-#btnConfirmar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); width:90%; max-width:500px; }
+input[type=text] { width:100%; padding:15px; font-size:16px; margin:15px 0; border-radius:8px; border:1px solid #ccc; }
 </style>
 </head>
 
 <body>
 
 <header id="cabecalho">
-<h1>💛 Chá de Cozinha 💛</h1>
+  <h1>💛 Chá de Cozinha 💛</h1>
 </header>
 
 <div id="popup">
-<div id="popupContent">
-<h3>Seja bem-vindo(a)!</h3>
-<input type="text" id="campoNome" placeholder="Digite seu nome completo">
-<button id="btnContinuarPopup">Entrar na Lista</button>
-</div>
+  <div id="popupContent">
+    <h3>Seja bem-vindo(a)!</h3>
+    <input type="text" id="campoNome" placeholder="Digite seu nome completo">
+    <button id="btnContinuarPopup">Entrar na Lista</button>
+  </div>
 </div>
 
 <main>
@@ -42,6 +42,19 @@ input[type=text] { width:100%; padding:15px; font-size:16px; margin:15px 0; bord
 <div class="item" data-item="Jogo de potes herméticos (pequenos)"><input type="radio" name="p" value="Jogo de potes herméticos (pequenos)"> Jogo de potes herméticos (pequenos)</div>
 <div class="item" data-item="Potes organizadores (arroz, feijão, açúcar e sal)"><input type="radio" name="p" value="Potes organizadores (arroz, feijão, açúcar e sal)"> Potes organizadores (arroz, feijão, açúcar e sal)</div>
 <div class="item" data-item="Potes de vidro com tampa"><input type="radio" name="p" value="Potes de vidro com tampa"> Potes de vidro com tampa</div>
+<div class="item" data-item="Potes plásticos com vedação"><input type="radio" name="p" value="Potes plásticos com vedação"> Potes plásticos com vedação</div>
+<div class="item" data-item="Jogo de pratos"><input type="radio" name="p" value="Jogo de pratos"> Jogo de pratos</div>
+<div class="item" data-item="Jogo de talheres (metal)"><input type="radio" name="p" value="Jogo de talheres (metal)"> Jogo de talheres (metal)</div>
+<div class="item" data-item="Jogo de facas"><input type="radio" name="p" value="Jogo de facas"> Jogo de facas</div>
+<div class="item" data-item="Frigideira antiaderente"><input type="radio" name="p" value="Frigideira antiaderente"> Frigideira antiaderente</div>
+<div class="item" data-item="Kit fondue"><input type="radio" name="p" value="Kit fondue"> Kit fondue</div>
+
+<h2>☕ ELETROPORTÁTEIS</h2>
+<div class="item" data-item="Batedeira"><input type="radio" name="p" value="Batedeira"> Batedeira</div>
+<div class="item" data-item="Liquidificador"><input type="radio" name="p" value="Liquidificador"> Liquidificador</div>
+<div class="item" data-item="Cafeteira"><input type="radio" name="p" value="Cafeteira"> Cafeteira</div>
+
+<h2>🛋️ EXTRAS</h2>
 <div class="item" data-item="Cabides"><input type="radio" name="p" value="Cabides"> Cabides</div>
 
 <button id="btnConfirmar">Confirmar Presente ✅</button>
@@ -55,155 +68,48 @@ const inputNome = document.getElementById("campoNome");
 const btnCont = document.getElementById("btnContinuarPopup");
 const btnConf = document.getElementById("btnConfirmar");
 
-// 🔒 BLOQUEIO GLOBAL
-fetch(API_URL)
-  .then(r => r.json())
-  .then(escolhidos => {
-    document.querySelectorAll(".item").forEach(el => {
-      if (escolhidos.includes(el.dataset.item)) {
-        el.classList.add("escolhido");
-        el.querySelector("input").disabled = true;
-      }
+// 🔄 carregar escolhidos
+function carregarEscolhidos() {
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(lista => {
+      document.querySelectorAll(".item").forEach(item => {
+        if (lista.includes(item.dataset.item)) {
+          item.classList.add("escolhido");
+          item.querySelector("input").disabled = true;
+        }
+      });
     });
-  });
+}
 
-// 👤 ENTRAR
 btnCont.onclick = () => {
   if (inputNome.value.trim().length < 2) {
     alert("Digite seu nome completo");
     return;
   }
   popup.style.display = "none";
+  carregarEscolhidos();
 };
 
-// ✅ CONFIRMAR
 btnConf.onclick = () => {
-  const sel = document.querySelector('input[name="p"]:checked');
-  if (!sel) return alert("Escolha um presente");
-
-  btnConf.disabled = true;
-  btnConf.innerText = "Enviando...";
-
-  fetch(API_URL, {
-    method:"POST",
-    headers:{ "Content-Type":"application/x-www-form-urlencoded" },
-    body:`nome=${encodeURIComponent(inputNome.value)}&presente=${encodeURIComponent(sel.value)}`
-  })
-  .then(r => r.text())
-  .then(resp => {
-    if (resp === "OK") {
-      alert("🎉 Presente confirmado!");
-      location.reload();
-    } else {
-      alert("❌ Presente já escolhido");
-      location.reload();
-    }
-  });
-};
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Chá de Cozinha 💛</title>
-
-<style>
-:root { --principal:#e8c07d; --fundo:#faf7f2; --card:#ffffff; --texto:#3b2f1c; }
-body { margin:0; font-family:sans-serif; background:var(--fundo); color:var(--texto); }
-header { background:var(--principal); text-align:center; padding:20px; cursor:pointer; }
-main { max-width:600px; margin:auto; padding:15px; padding-bottom:150px; }
-h2 { border-bottom:2px solid var(--principal); padding-bottom:5px; margin-top:25px; }
-.item { background:var(--card); margin-top:8px; padding:12px; border-radius:8px; display:flex; gap:10px; align-items:center; border:1px solid #ddd; }
-.item.escolhido { background:#eee; opacity:.5; text-decoration:line-through; }
-button { width:100%; padding:15px; font-size:18px; background:var(--principal); border:none; border-radius:10px; cursor:pointer; font-weight:bold; }
-#popup { position:fixed; inset:0; background:rgba(0,0,0,.85); display:flex; align-items:center; justify-content:center; z-index:9999; }
-#popupContent { background:#fff; padding:25px; border-radius:15px; width:80%; max-width:320px; text-align:center; }
-input[type=text] { width:100%; padding:15px; font-size:16px; margin:15px 0; border:1px solid #ccc; border-radius:8px; }
-#btnConfirmar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); width:90%; max-width:500px; }
-</style>
-</head>
-
-<body>
-
-<header id="cabecalho">
-<h1>💛 Chá de Cozinha 💛</h1>
-</header>
-
-<div id="popup">
-<div id="popupContent">
-<h3>Seja bem-vindo(a)!</h3>
-<input type="text" id="campoNome" placeholder="Digite seu nome completo">
-<button id="btnContinuarPopup">Entrar na Lista</button>
-</div>
-</div>
-
-<main>
-
-<h2>🍳 COZINHA</h2>
-<div class="item" data-item="Lixeira de cozinha (média ou grande)"><input type="radio" name="p" value="Lixeira de cozinha (média ou grande)"> Lixeira de cozinha (média ou grande)</div>
-<div class="item" data-item="Jogo de potes herméticos (pequenos)"><input type="radio" name="p" value="Jogo de potes herméticos (pequenos)"> Jogo de potes herméticos (pequenos)</div>
-<div class="item" data-item="Potes organizadores (arroz, feijão, açúcar e sal)"><input type="radio" name="p" value="Potes organizadores (arroz, feijão, açúcar e sal)"> Potes organizadores (arroz, feijão, açúcar e sal)</div>
-<div class="item" data-item="Potes de vidro com tampa"><input type="radio" name="p" value="Potes de vidro com tampa"> Potes de vidro com tampa</div>
-<div class="item" data-item="Cabides"><input type="radio" name="p" value="Cabides"> Cabides</div>
-
-<button id="btnConfirmar">Confirmar Presente ✅</button>
-</main>
-
-<script>
-const API_URL = "https://script.google.com/macros/s/AKfycbx0BRnzKgq8N93zinfHdmG2i5GUieW0W1vLx-5VUpknAlIu7-fBs7KPvQ5ZJ_hL9c7y/exec";
-
-const popup = document.getElementById("popup");
-const inputNome = document.getElementById("campoNome");
-const btnCont = document.getElementById("btnContinuarPopup");
-const btnConf = document.getElementById("btnConfirmar");
-
-// 🔒 BLOQUEIO GLOBAL
-fetch(API_URL)
-  .then(r => r.json())
-  .then(escolhidos => {
-    document.querySelectorAll(".item").forEach(el => {
-      if (escolhidos.includes(el.dataset.item)) {
-        el.classList.add("escolhido");
-        el.querySelector("input").disabled = true;
-      }
-    });
-  });
-
-// 👤 ENTRAR
-btnCont.onclick = () => {
-  if (inputNome.value.trim().length < 2) {
-    alert("Digite seu nome completo");
+  const escolhido = document.querySelector('input[name="p"]:checked');
+  if (!escolhido) {
+    alert("Escolha um presente");
     return;
   }
-  popup.style.display = "none";
-};
-
-// ✅ CONFIRMAR
-btnConf.onclick = () => {
-  const sel = document.querySelector('input[name="p"]:checked');
-  if (!sel) return alert("Escolha um presente");
 
   btnConf.disabled = true;
   btnConf.innerText = "Enviando...";
 
   fetch(API_URL, {
-    method:"POST",
-    headers:{ "Content-Type":"application/x-www-form-urlencoded" },
-    body:`nome=${encodeURIComponent(inputNome.value)}&presente=${encodeURIComponent(sel.value)}`
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `nome=${encodeURIComponent(inputNome.value)}&presente=${encodeURIComponent(escolhido.value)}`
   })
   .then(r => r.text())
   .then(resp => {
-    if (resp === "OK") {
-      alert("🎉 Presente confirmado!");
-      location.reload();
-    } else {
-      alert("❌ Presente já escolhido");
-      location.reload();
-    }
+    alert(resp === "OK" ? "🎉 Presente confirmado!" : "❌ Presente já escolhido");
+    location.reload();
   });
 };
 </script>
